@@ -1,9 +1,10 @@
-﻿using MonkeyFinder.Services;
-using System.Windows.Input;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using MonkeyFinder.Services;
 
 namespace MonkeyFinder.ViewModel;
 
-public class MonkeysViewModel : BaseViewModel
+public partial class MonkeysViewModel : BaseViewModel
 {
     public ObservableCollection<Monkey> Monkeys { get; } = new();
 
@@ -14,9 +15,10 @@ public class MonkeysViewModel : BaseViewModel
         this.monkeyService = monkeyService;
     }
 
-    private Command getMonkeysCommand;
-    public ICommand GetMonkeysCommand => getMonkeysCommand ??= new Command(async () => await GetMonkeysAsync());
+    [ObservableProperty]
+    bool isRefreshing;
 
+    [RelayCommand]
     async Task GetMonkeysAsync()
     {
         if (IsBusy)
@@ -25,7 +27,6 @@ public class MonkeysViewModel : BaseViewModel
         try
         {
             IsBusy = true;
-
             var monkeys = await monkeyService.GetMonkeys();
 
             if (Monkeys.Count != 0)
@@ -43,12 +44,12 @@ public class MonkeysViewModel : BaseViewModel
         finally
         {
             IsBusy = false;
+            IsRefreshing = false;
         }
+
     }
 
-
-    private Command goToDetailsCommand;
-    public ICommand GoToDetailsCommand => goToDetailsCommand ??= new Command<Monkey>(async (monkey) => await GoToDetails(monkey));
+    [RelayCommand]
     async Task GoToDetails(Monkey monkey)
     {
         if (monkey == null)
