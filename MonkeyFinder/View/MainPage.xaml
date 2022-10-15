@@ -12,37 +12,44 @@
         ColumnSpacing="5"
         RowDefinitions="*,Auto"
         RowSpacing="0">
-        <CollectionView ItemsSource="{Binding Monkeys}"
-                         SelectionMode="None"
-                         Grid.ColumnSpan="2">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:Monkey">
-                    <Grid Padding="10">
-                        <Frame HeightRequest="125" Style="{StaticResource CardView}">
 
-                            <!-- Add the Gesture Recognizer-->
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer 
+        <RefreshView
+            Grid.ColumnSpan="2"
+            Command="{Binding GetMonkeysCommand}"
+            IsRefreshing="{Binding IsRefreshing}">
+
+            <CollectionView ItemsSource="{Binding Monkeys}"
+                            SelectionMode="None">
+                
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Monkey">
+                        <Grid Padding="10">
+                            <Frame HeightRequest="125" Style="{StaticResource CardView}">
+                                <!-- Add the Gesture Recognizer-->
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer 
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MonkeysViewModel}}, Path=GoToDetailsCommand}"
-                                    CommandParameter="{Binding .}"/>        
-                            </Frame.GestureRecognizers>
-                            
-                            <Grid Padding="0" ColumnDefinitions="125,*">
-                                <Image Aspect="AspectFill" Source="{Binding Image}"
+                                    CommandParameter="{Binding .}"/>
+                                </Frame.GestureRecognizers>
+
+                                <Grid Padding="0" ColumnDefinitions="125,*">
+                                    <Image Aspect="AspectFill" Source="{Binding Image}"
                                        WidthRequest="125"
                                        HeightRequest="125"/>
-                                <VerticalStackLayout
+                                    <VerticalStackLayout
                                     Grid.Column="1"
                                     Padding="10">
-                                    <Label Style="{StaticResource LargeLabel}" Text="{Binding Name}" />
-                                    <Label Style="{StaticResource MediumLabel}" Text="{Binding Location}" />
-                                </VerticalStackLayout>
-                            </Grid>
-                        </Frame>
-                    </Grid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                                        <Label Style="{StaticResource LargeLabel}" Text="{Binding Name}" />
+                                        <Label Style="{StaticResource MediumLabel}" Text="{Binding Location}" />
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Frame>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </RefreshView>
 
         <Button Text="Get Monkeys" 
                 Command="{Binding GetMonkeysCommand}"
@@ -52,12 +59,5 @@
                 Style="{StaticResource ButtonOutline}"
                 Margin="8"/>
 
-        <!-- Add this -->
-        <ActivityIndicator IsVisible="{Binding IsBusy}"
-                           IsRunning="{Binding IsBusy}"
-                           HorizontalOptions="FillAndExpand"
-                           VerticalOptions="CenterAndExpand"
-                           Grid.RowSpan="2"
-                           Grid.ColumnSpan="2"/>
     </Grid>
 </ContentPage>

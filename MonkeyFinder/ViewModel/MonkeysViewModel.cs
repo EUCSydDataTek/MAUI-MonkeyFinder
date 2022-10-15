@@ -1,4 +1,5 @@
-﻿using MonkeyFinder.Services;
+﻿using IntelliJ.Lang.Annotations;
+using MonkeyFinder.Services;
 using System.Windows.Input;
 
 namespace MonkeyFinder.ViewModel;
@@ -12,6 +13,13 @@ public class MonkeysViewModel : BaseViewModel
     {
         Title = "Monkey Finder";
         this.monkeyService = monkeyService;
+    }
+
+    bool isRefreshing;
+    public bool IsRefreshing 
+    { 
+        get => isRefreshing;
+        set => SetProperty(ref isRefreshing, value);
     }
 
     private Command getMonkeysCommand;
@@ -43,6 +51,7 @@ public class MonkeysViewModel : BaseViewModel
         finally
         {
             IsBusy = false;
+            IsRefreshing = false;
         }
     }
 
