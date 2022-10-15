@@ -12,21 +12,13 @@
         ColumnSpacing="5"
         RowDefinitions="*,Auto"
         RowSpacing="0">
-        <CollectionView ItemsSource="{Binding Monkeys}"
-                         SelectionMode="None"
+        <CollectionView 
+                         
                          Grid.ColumnSpan="2">
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:Monkey">
+                <DataTemplate >
                     <Grid Padding="10">
                         <Frame HeightRequest="125" Style="{StaticResource CardView}">
-
-                            <!-- Add the Gesture Recognizer-->
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer 
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MonkeysViewModel}}, Path=GoToDetailsCommand}"
-                                    CommandParameter="{Binding .}"/>        
-                            </Frame.GestureRecognizers>
-                            
                             <Grid Padding="0" ColumnDefinitions="125,*">
                                 <Image Aspect="AspectFill" Source="{Binding Image}"
                                        WidthRequest="125"
@@ -45,19 +37,10 @@
         </CollectionView>
 
         <Button Text="Get Monkeys" 
-                Command="{Binding GetMonkeysCommand}"
-                IsEnabled="{Binding IsNotBusy}"
+
                 Grid.Row="1"
                 Grid.Column="0"
                 Style="{StaticResource ButtonOutline}"
                 Margin="8"/>
-
-        <!-- Add this -->
-        <ActivityIndicator IsVisible="{Binding IsBusy}"
-                           IsRunning="{Binding IsBusy}"
-                           HorizontalOptions="FillAndExpand"
-                           VerticalOptions="CenterAndExpand"
-                           Grid.RowSpan="2"
-                           Grid.ColumnSpan="2"/>
     </Grid>
 </ContentPage>

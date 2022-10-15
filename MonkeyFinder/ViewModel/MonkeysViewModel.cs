@@ -1,5 +1,4 @@
 ﻿using MonkeyFinder.Services;
-using System.Windows.Input;
 
 namespace MonkeyFinder.ViewModel;
 
@@ -14,8 +13,6 @@ public class MonkeysViewModel : BaseViewModel
         this.monkeyService = monkeyService;
     }
 
-    private Command getMonkeysCommand;
-    public ICommand GetMonkeysCommand => getMonkeysCommand ??= new Command(async () => await GetMonkeysAsync());
 
     async Task GetMonkeysAsync()
     {
@@ -44,19 +41,5 @@ public class MonkeysViewModel : BaseViewModel
         {
             IsBusy = false;
         }
-    }
-
-
-    private Command goToDetailsCommand;
-    public ICommand GoToDetailsCommand => goToDetailsCommand ??= new Command<Monkey>(async (monkey) => await GoToDetails(monkey));
-    async Task GoToDetails(Monkey monkey)
-    {
-        if (monkey == null)
-            return;
-
-        await Shell.Current.GoToAsync(nameof(DetailsPage), true, new Dictionary<string, object>
-        {
-            {"MyMonkey", monkey }
-        });
     }
 }
