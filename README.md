@@ -1,4 +1,4 @@
-# 3.SelectionChangedCommand_PullToRefresh
+# 2b.SelectionChangedCommand_PullToRefresh
 
 Her benyttes CollectionView med `SelectionChangedCommand`. 
 Virker dog ikke hvis der benyttes `Frame` i Templaten, men virker med `Border`:
