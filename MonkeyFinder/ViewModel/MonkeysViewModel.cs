@@ -1,5 +1,4 @@
-﻿using IntelliJ.Lang.Annotations;
-using MonkeyFinder.Services;
+﻿using MonkeyFinder.Services;
 using System.Windows.Input;
 
 namespace MonkeyFinder.ViewModel;
@@ -14,6 +13,8 @@ public class MonkeysViewModel : BaseViewModel
         Title = "Monkey Finder";
         this.monkeyService = monkeyService;
     }
+
+    public Monkey SelectedMonkey { get; set; }
 
     bool isRefreshing;
     public bool IsRefreshing 
@@ -57,15 +58,15 @@ public class MonkeysViewModel : BaseViewModel
 
 
     private Command goToDetailsCommand;
-    public ICommand GoToDetailsCommand => goToDetailsCommand ??= new Command<Monkey>(async (monkey) => await GoToDetails(monkey));
-    async Task GoToDetails(Monkey monkey)
+    public ICommand GoToDetailsCommand => goToDetailsCommand ??= new Command(async () => await GoToDetails());
+    async Task GoToDetails()
     {
-        if (monkey == null)
+        if (SelectedMonkey == null)
             return;
 
         await Shell.Current.GoToAsync(nameof(DetailsPage), true, new Dictionary<string, object>
         {
-            {"MyMonkey", monkey }
+            {"MyMonkey", SelectedMonkey }
         });
     }
 }
