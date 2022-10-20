@@ -1,6 +1,9 @@
 # 2b.SelectionChangedCommand_PullToRefresh
 
-Her benyttes CollectionView med `SelectionChangedCommand`. 
+Her benyttes CollectionView med `SelectionChangedCommand` i stedet for GestureRecognizer. Det giver to nye muligheder:
+- Det valgte item bliver automatisk markeret med en anden farve (kan styles)
+- Man kan lave Multiple selection
+
 Virker dog ikke hvis der benyttes `Frame` i Templaten, men virker med `Border`:
 
 ```xml
