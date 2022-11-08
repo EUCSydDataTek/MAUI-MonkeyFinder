@@ -27,7 +27,7 @@ public partial class MonkeysViewModel : BaseViewModel
         try
         {
             IsBusy = true;
-            var monkeys = await monkeyService.GetMonkeys();
+            List<Monkey> monkeys = await monkeyService.GetMonkeys();
 
             if (Monkeys.Count != 0)
                 Monkeys.Clear();
